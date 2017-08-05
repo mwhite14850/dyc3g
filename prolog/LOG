@@ -1,0 +1,434 @@
+$ swipl
+Welcome to SWI-Prolog (threaded, 64 bits, version 7.4.1)
+SWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software.
+Please run ?- license. for legal details.
+
+For online help and background, visit http://www.swi-prolog.org
+For built-in help, use ?- help(Topic). or ?- apropos(Word).
+
+?- [dyc3g].
+
+> ------------------------------------------------------------------- <
+> betaConversion.pl, by Patrick Blackburn and Johan Bos               <
+>                                                                     <
+> ?- betaConvert(F,C).         - beta-convert a formula               <
+> ?- betaConvertTestSuite.     - run the test suite                   <
+> ?- infix.                    - switches to infix display mode       <
+> ?- prefix.                   - switches to prefix display mode      <
+> ?- info.                     - shows this information               <
+> ------------------------------------------------------------------- <
+
+
+> ------------------------------------------------------------------- <
+> dyc3g.pl, by Michael White                                          <
+>                                                                     <
+> ?- regression.               - run regression test suite            <
+> ?- continuized.              - parse a sentence using continuations <
+> ?- derivs.                   - switches derivations on              <
+> ?- noderivs.                 - switches derivations off             <
+> ?- info.                     - shows this information               <
+> ------------------------------------------------------------------- <
+
+true.
+
+?- regression.
+
+Status/#Readings/#Expected/#Derivations/Sentence:
+
+ok	2	2	2	everyone likes someone
+ok	2	2	2	everyone loves a charming restaurant
+ok	6	6	6	most waiters give everyone a juicy burger
+ok	6	6	6	Vincent trades every customer a burger for few prizes
+ok+	24	24	30	most waiters trade everyone a burger for few prizes
+ok	4	4	4	most customers in every charming restaurant order a juicy burger
+ok	2	2	2	if a charming waiter snorts, Mia walks
+ok+	1	1	2	if every charming waiter snorts, Mia walks
+ok	2	2	2	every customer who likes a charming restaurant walks
+ok+	1	1	2	a customer who likes every charming restaurant walks
+ok	2	2	2	every customer who a charming waiter likes complains
+ok+	1	1	2	a customer who every charming waiter likes complains
+ok	2	2	2	a customer in every charming restaurant complains
+ok	4	4	4	most customers in every restaurant who complain like Vincent
+ok	2	2	2	Vincent gives everyone a five dollar shake
+ok	2	2	2	a customer orders a juicy burger
+
+found 72 derivations for 63 readings
+across 16 test items of total length 118
+with 16 success(es) and 0 failure(s)
+% 1,260,823 inferences, 0.590 CPU in 0.609 seconds (97% CPU, 2137176 Lips)
+
+true.
+
+?- derivs.
+true.
+
+?- infix.
+true.
+
+?- continuized.
+
+> every customer who likes a charming restaurant walks
+
+Derivation 1
+
+every customer who likes a charming restaurant walks :- 
+  s
+  { <(all A { <(customer(A) & like(A,B)), +[B]> | restaurant(B) & charming(B) } { <walk(A), _> }), _> }
+  Mt
+  (Lower)
+ every customer who likes a charming restaurant walks :- 
+   s _|_ s __||__ s
+   (lam A { <(all B { <(customer(B) & like(B,C)), +[C]> | restaurant(C) & charming(C) } (A @ walk(B))), _> })
+   (t -> Mt) -> Mt
+   (LiftR_<)
+  every customer who likes a charming restaurant :- 
+    s _|_ s __||__ np
+    (lam A { <(all B { <(customer(B) & like(B,C)), +[C]> | restaurant(C) & charming(C) } (A @ B)), _> })
+    (e -> Mt) -> Mt
+    (Lower_Comb_>)
+   every :- 
+     (s _|_ s __||__ np) _|_ s __||__ (s/n)
+     (lam A (lam B { <(all C (A @ (lam D (D @ C))) (B @ C)), _> }))
+     (((e -> t) -> t) -> Mt) -> (e -> Mt) -> Mt
+     (lex)
+   customer who likes a charming restaurant :- 
+     s _|_ s __||__ n
+     (lam A seq(dys(lam(B,like(B,C)),[C],[restaurant(C),charming(C)]),lam(D,app(A,lam(E,and(customer(E),app(D,E)))))))
+     ((e -> t) -> Mt) -> Mt
+     (LiftL_<)
+    customer :- 
+      n
+      (lam A customer(A))
+      e -> t
+      (lex)
+    who likes a charming restaurant :- 
+      s _|_ s __||__ (n\n)
+      (lam A seq(dys(lam(B,like(B,C)),[C],[restaurant(C),charming(C)]),lam(D,app(A,lam(E,lam(F,and(app(E,F),app(D,F))))))))
+      (((e -> t) -> e -> t) -> Mt) -> Mt
+      (DelimR_LiftL_>)
+     who :- 
+       (n\n)/<(s\np)>
+       (lam A (lam B (lam C ((B @ C) & (A @ C)))))
+       (e -> t) -> (e -> t) -> e -> t
+       (lex)
+     likes a charming restaurant :- 
+       s _|_ s __||__ (s\np)
+       (lam A seq(dys(B,[B],[restaurant(B),charming(B)]),lam(C,app(A,lam(D,like(D,C))))))
+       ((e -> t) -> Mt) -> Mt
+       (LiftL_>)
+      likes :- 
+        (s\np)/np
+        (lam A (lam B like(B,A)))
+        e -> e -> t
+        (lex)
+      a charming restaurant :- 
+        s _|_ s __||__ np
+        (lam A seq(dys(B,[B],[restaurant(B),charming(B)]),lam(C,app(A,C))))
+        (e -> Mt) -> Mt
+        (Lower_LiftR_>)
+       a :- 
+         (s _|_ s __||__ np) _|_ s __||__ (s/n)
+         (lam A (lam B seq(seq_st(dys(C,[C],[]),lam(D,app(A,lam(E,app(E,D))))),lam(F,app(B,F)))))
+         (((e -> t) -> t) -> Mt) -> (e -> Mt) -> Mt
+         (lex)
+       charming restaurant :- 
+         n
+         (lam A (restaurant(A) & charming(A)))
+         e -> t
+         (>)
+        charming :- 
+          n/n
+          (lam A (lam B ((A @ B) & charming(B))))
+          (e -> t) -> e -> t
+          (lex)
+        restaurant :- 
+          n
+          (lam A restaurant(A))
+          e -> t
+          (lex)
+  walks :- 
+    s\np
+    (lam A walk(A))
+    e -> t
+    (lex)
+
+
+Derivation 2
+
+every customer who likes a charming restaurant walks :- 
+  s
+  { <(all A { <(customer(A) & like(A,B)), _> } { <walk(A), _> }), +[B]> | restaurant(B) & charming(B) }
+  Mt
+  (Lower)
+ every customer who likes a charming restaurant walks :- 
+   s _|_ s __||__ s
+   (lam A { <(all B { <(customer(B) & like(B,C)), _> } (A @ walk(B))), +[C]> | restaurant(C) & charming(C) })
+   (t -> Mt) -> Mt
+   (LiftR_<)
+  every customer who likes a charming restaurant :- 
+    s _|_ s __||__ np
+    (lam A { <(all B { <(customer(B) & like(B,C)), _> } (A @ B)), +[C]> | restaurant(C) & charming(C) })
+    (e -> Mt) -> Mt
+    (Lower_LiftL_LiftR_>)
+   every :- 
+     (s _|_ s __||__ np) _|_ s __||__ (s/n)
+     (lam A (lam B { <(all C (A @ (lam D (D @ C))) (B @ C)), _> }))
+     (((e -> t) -> t) -> Mt) -> (e -> Mt) -> Mt
+     (lex)
+   customer who likes a charming restaurant :- 
+     s _|_ s __||__ n
+     (lam A seq(dys(lam(B,like(B,C)),[C],[restaurant(C),charming(C)]),lam(D,app(A,lam(E,and(customer(E),app(D,E)))))))
+     ((e -> t) -> Mt) -> Mt
+     (LiftL_<)
+    customer :- 
+      n
+      (lam A customer(A))
+      e -> t
+      (lex)
+    who likes a charming restaurant :- 
+      s _|_ s __||__ (n\n)
+      (lam A seq(dys(lam(B,like(B,C)),[C],[restaurant(C),charming(C)]),lam(D,app(A,lam(E,lam(F,and(app(E,F),app(D,F))))))))
+      (((e -> t) -> e -> t) -> Mt) -> Mt
+      (DelimR_LiftL_>)
+     who :- 
+       (n\n)/<(s\np)>
+       (lam A (lam B (lam C ((B @ C) & (A @ C)))))
+       (e -> t) -> (e -> t) -> e -> t
+       (lex)
+     likes a charming restaurant :- 
+       s _|_ s __||__ (s\np)
+       (lam A seq(dys(B,[B],[restaurant(B),charming(B)]),lam(C,app(A,lam(D,like(D,C))))))
+       ((e -> t) -> Mt) -> Mt
+       (LiftL_>)
+      likes :- 
+        (s\np)/np
+        (lam A (lam B like(B,A)))
+        e -> e -> t
+        (lex)
+      a charming restaurant :- 
+        s _|_ s __||__ np
+        (lam A seq(dys(B,[B],[restaurant(B),charming(B)]),lam(C,app(A,C))))
+        (e -> Mt) -> Mt
+        (Lower_LiftR_>)
+       a :- 
+         (s _|_ s __||__ np) _|_ s __||__ (s/n)
+         (lam A (lam B seq(seq_st(dys(C,[C],[]),lam(D,app(A,lam(E,app(E,D))))),lam(F,app(B,F)))))
+         (((e -> t) -> t) -> Mt) -> (e -> Mt) -> Mt
+         (lex)
+       charming restaurant :- 
+         n
+         (lam A (restaurant(A) & charming(A)))
+         e -> t
+         (>)
+        charming :- 
+          n/n
+          (lam A (lam B ((A @ B) & charming(B))))
+          (e -> t) -> e -> t
+          (lex)
+        restaurant :- 
+          n
+          (lam A restaurant(A))
+          e -> t
+          (lex)
+  walks :- 
+    s\np
+    (lam A walk(A))
+    e -> t
+    (lex)
+
+
+Reading 1
+
+{ <(all A { <(customer(A) & like(A,B)), +[B]> | restaurant(B) & charming(B) } { <walk(A), _> }), _> }
+(all A (all B (((customer(A) & like(A,B)) & (restaurant(B) & charming(B))) -> walk(A))))
+
+
+Reading 2
+
+{ <(all A { <(customer(A) & like(A,B)), _> } { <walk(A), _> }), +[B]> | restaurant(B) & charming(B) }
+(some A ((all B ((customer(B) & like(B,A)) -> walk(B))) & (restaurant(A) & charming(A))))
+
+
+true.
+
+?- continuized.
+
+> a customer who likes every charming restaurant walks
+
+Derivation 1
+
+a customer who likes every charming restaurant walks :- 
+  s
+  { <walk(A), +[A]> | customer(A) & (all B { <(restaurant(B) & charming(B)), _> } { <like(A,B), _> }) }
+  Mt
+  (Lower)
+ a customer who likes every charming restaurant walks :- 
+   s _|_ s __||__ s
+   (lam A seq(dys(B,[B],[customer(B),all(C,dys(and(restaurant(C),charming(C)),[],[]),dys(like(B,C),[],[]))]),lam(D,app(A,walk(D)))))
+   (t -> Mt) -> Mt
+   (LiftR_<)
+  a customer who likes every charming restaurant :- 
+    s _|_ s __||__ np
+    (lam A seq(dys(B,[B],[customer(B),all(C,dys(and(restaurant(C),charming(C)),[],[]),dys(like(B,C),[],[]))]),lam(D,app(A,D))))
+    (e -> Mt) -> Mt
+    (Lower_Comb_>)
+   a :- 
+     (s _|_ s __||__ np) _|_ s __||__ (s/n)
+     (lam A (lam B seq(seq_st(dys(C,[C],[]),lam(D,app(A,lam(E,app(E,D))))),lam(F,app(B,F)))))
+     (((e -> t) -> t) -> Mt) -> (e -> Mt) -> Mt
+     (lex)
+   customer who likes every charming restaurant :- 
+     s _|_ s __||__ n
+     (lam A (A @ (lam B (customer(B) & (all C { <(restaurant(C) & charming(C)), _> } { <like(B,C), _> })))))
+     ((e -> t) -> Mt) -> Mt
+     (LiftL_<)
+    customer :- 
+      n
+      (lam A customer(A))
+      e -> t
+      (lex)
+    who likes every charming restaurant :- 
+      s _|_ s __||__ (n\n)
+      (lam A (A @ (lam B (lam C ((B @ C) & (all D { <(restaurant(D) & charming(D)), _> } { <like(C,D), _> }))))))
+      (((e -> t) -> e -> t) -> Mt) -> Mt
+      (DelimR_LiftL_>)
+     who :- 
+       (n\n)/<(s\np)>
+       (lam A (lam B (lam C ((B @ C) & (A @ C)))))
+       (e -> t) -> (e -> t) -> e -> t
+       (lex)
+     likes every charming restaurant :- 
+       s _|_ s __||__ (s\np)
+       (lam A { <(all B { <(restaurant(B) & charming(B)), _> } (A @ (lam C like(C,B)))), _> })
+       ((e -> t) -> Mt) -> Mt
+       (LiftL_>)
+      likes :- 
+        (s\np)/np
+        (lam A (lam B like(B,A)))
+        e -> e -> t
+        (lex)
+      every charming restaurant :- 
+        s _|_ s __||__ np
+        (lam A { <(all B { <(restaurant(B) & charming(B)), _> } (A @ B)), _> })
+        (e -> Mt) -> Mt
+        (Lower_LiftR_>)
+       every :- 
+         (s _|_ s __||__ np) _|_ s __||__ (s/n)
+         (lam A (lam B { <(all C (A @ (lam D (D @ C))) (B @ C)), _> }))
+         (((e -> t) -> t) -> Mt) -> (e -> Mt) -> Mt
+         (lex)
+       charming restaurant :- 
+         n
+         (lam A (restaurant(A) & charming(A)))
+         e -> t
+         (>)
+        charming :- 
+          n/n
+          (lam A (lam B ((A @ B) & charming(B))))
+          (e -> t) -> e -> t
+          (lex)
+        restaurant :- 
+          n
+          (lam A restaurant(A))
+          e -> t
+          (lex)
+  walks :- 
+    s\np
+    (lam A walk(A))
+    e -> t
+    (lex)
+
+
+Derivation 2
+
+a customer who likes every charming restaurant walks :- 
+  s
+  { <walk(A), +[A]> | customer(A) & (all B { <(restaurant(B) & charming(B)), _> } { <like(A,B), _> }) }
+  Mt
+  (Lower)
+ a customer who likes every charming restaurant walks :- 
+   s _|_ s __||__ s
+   (lam A seq(dys(B,[B],[customer(B),all(C,dys(and(restaurant(C),charming(C)),[],[]),dys(like(B,C),[],[]))]),lam(D,app(A,walk(D)))))
+   (t -> Mt) -> Mt
+   (LiftR_<)
+  a customer who likes every charming restaurant :- 
+    s _|_ s __||__ np
+    (lam A seq(dys(B,[B],[customer(B),all(C,dys(and(restaurant(C),charming(C)),[],[]),dys(like(B,C),[],[]))]),lam(D,app(A,D))))
+    (e -> Mt) -> Mt
+    (Lower_LiftL_LiftR_>)
+   a :- 
+     (s _|_ s __||__ np) _|_ s __||__ (s/n)
+     (lam A (lam B seq(seq_st(dys(C,[C],[]),lam(D,app(A,lam(E,app(E,D))))),lam(F,app(B,F)))))
+     (((e -> t) -> t) -> Mt) -> (e -> Mt) -> Mt
+     (lex)
+   customer who likes every charming restaurant :- 
+     s _|_ s __||__ n
+     (lam A (A @ (lam B (customer(B) & (all C { <(restaurant(C) & charming(C)), _> } { <like(B,C), _> })))))
+     ((e -> t) -> Mt) -> Mt
+     (LiftL_<)
+    customer :- 
+      n
+      (lam A customer(A))
+      e -> t
+      (lex)
+    who likes every charming restaurant :- 
+      s _|_ s __||__ (n\n)
+      (lam A (A @ (lam B (lam C ((B @ C) & (all D { <(restaurant(D) & charming(D)), _> } { <like(C,D), _> }))))))
+      (((e -> t) -> e -> t) -> Mt) -> Mt
+      (DelimR_LiftL_>)
+     who :- 
+       (n\n)/<(s\np)>
+       (lam A (lam B (lam C ((B @ C) & (A @ C)))))
+       (e -> t) -> (e -> t) -> e -> t
+       (lex)
+     likes every charming restaurant :- 
+       s _|_ s __||__ (s\np)
+       (lam A { <(all B { <(restaurant(B) & charming(B)), _> } (A @ (lam C like(C,B)))), _> })
+       ((e -> t) -> Mt) -> Mt
+       (LiftL_>)
+      likes :- 
+        (s\np)/np
+        (lam A (lam B like(B,A)))
+        e -> e -> t
+        (lex)
+      every charming restaurant :- 
+        s _|_ s __||__ np
+        (lam A { <(all B { <(restaurant(B) & charming(B)), _> } (A @ B)), _> })
+        (e -> Mt) -> Mt
+        (Lower_LiftR_>)
+       every :- 
+         (s _|_ s __||__ np) _|_ s __||__ (s/n)
+         (lam A (lam B { <(all C (A @ (lam D (D @ C))) (B @ C)), _> }))
+         (((e -> t) -> t) -> Mt) -> (e -> Mt) -> Mt
+         (lex)
+       charming restaurant :- 
+         n
+         (lam A (restaurant(A) & charming(A)))
+         e -> t
+         (>)
+        charming :- 
+          n/n
+          (lam A (lam B ((A @ B) & charming(B))))
+          (e -> t) -> e -> t
+          (lex)
+        restaurant :- 
+          n
+          (lam A restaurant(A))
+          e -> t
+          (lex)
+  walks :- 
+    s\np
+    (lam A walk(A))
+    e -> t
+    (lex)
+
+
+Reading 1, 2
+
+{ <walk(A), +[A]> | customer(A) & (all B { <(restaurant(B) & charming(B)), _> } { <like(A,B), _> }) }
+(some A (walk(A) & (customer(A) & (all B ((restaurant(B) & charming(B)) -> like(A,B))))))
+
+
+true.
+
+?- 

@@ -22,7 +22,17 @@ implements Charlow's (2014) treatment of the exceptional scope of
 indefinites using a dynamic semantics with the state-set monad. 
 
 
+# License
+
+This file uses code from BB1, version 1.3 (November 2006), and shares
+the same license.
+
+
 # Requirements
 
 * SWI-Prolog version 7.4 or later
 
+
+# Usage
+
+See prolog/LOG for example usage.
