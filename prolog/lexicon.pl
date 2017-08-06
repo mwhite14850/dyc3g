@@ -57,8 +57,16 @@ lexcat(Words,Cat,Rest) :-
 
 lexitem([vincent|T]-T,pn,vincent).
 lexitem([mia|T]-T,pn,mia).
-lexitem([fred|T]-T,pn,fred).
 lexitem([burger,king|T]-T,pn,bk).
+
+lexitem([brazil|T]-T,pn,brazil).
+lexitem([china|T]-T,pn,china).
+lexitem([germany|T]-T,pn,germany).
+lexitem([fred|T]-T,pn,fred).
+lexitem([john|T]-T,pn,john).
+lexitem([kahn|T]-T,pn,kahn).
+lexitem([marcos|T]-T,pn,marcos).
+lexitem([rivaldo|T]-T,pn,rivaldo).
 
 
 /*========================================================================
@@ -89,6 +97,18 @@ lexitem([like|T]-T,tv,like).
 lexitem([orders|T]-T,tv,order).
 lexitem([order|T]-T,tv,order).
 
+lexitem([beat|T]-T,tv,beat).
+lexitem([blocked|T]-T,tv,block).
+lexitem([defeated|T]-T,tv,defeat).
+lexitem([kicked|T]-T,tv,kick).
+
+
+/*========================================================================
+   Particle Verbs
+========================================================================*/
+
+lexitem([picked|T]-T,tv_prt,[pick_up,up]).
+
 
 /*========================================================================
    Ditransitive Verbs
@@ -96,6 +116,7 @@ lexitem([order|T]-T,tv,order).
 
 lexitem([gives|T]-T,dtv,give).
 lexitem([give|T]-T,dtv,give).
+lexitem([gave|T]-T,dtv,give).
 lexitem([shows|T]-T,dtv,show).
 lexitem([show|T]-T,dtv,show).
 
@@ -106,6 +127,15 @@ lexitem([show|T]-T,dtv,show).
 
 lexitem([trades|T]-T,dtv_for,trade).
 lexitem([trade|T]-T,dtv_for,trade).
+
+
+/*========================================================================
+   Sentential Complement Verbs
+========================================================================*/
+
+lexitem([said|T]-T,scompv,say).
+lexitem([thought|T]-T,scompv,think).
+lexitem([knew|T]-T,scompv,know).
 
 
 /*========================================================================
@@ -131,6 +161,13 @@ lexitem([five,dollar,shake|T]-T,n,fdshake).
 lexitem([prize|T]-T,n,prize).
 lexitem([prizes|T]-T,n,prize).
 
+lexitem([ball|T]-T,n,ball).
+lexitem([card|T]-T,n,card).
+lexitem([player|T]-T,n,player).
+lexitem([referee|T]-T,n,referee).
+lexitem([shot|T]-T,n,shot).
+lexitem([team|T]-T,n,team).
+
 
 /*========================================================================
    Relational Nouns
@@ -149,12 +186,18 @@ lexitem([aunt|T]-T,rn,aunt).
 lexitem([charming|T]-T,adj,charming).
 lexitem([juicy|T]-T,adj,juicy).
 
+lexitem([powerful|T]-T,adj,powerful).
+lexitem([red|T]-T,adj,red).
+lexitem([welldeserved|T]-T,adj,well_deserved).
+lexitem([yellow|T]-T,adj,yellow).
+
 
 /*========================================================================
    Prepositions
 ========================================================================*/
 
 % regular prep
+lexitem([by|T]-T,prep,by).
 lexitem([in|T]-T,prep,in).
 lexitem([on|T]-T,prep,on).
 
@@ -167,6 +210,59 @@ lexitem([on|T]-T,prep,on).
 lexitem([of|T]-T,case_prep,of).
 lexitem([for|T]-T,case_prep,for).
 
+
+/*========================================================================
+   Particles
+========================================================================*/
+
+lexitem([up|T]-T,prt,up).
+
+
+/*========================================================================
+   Adverbs
+========================================================================*/
+
+lexitem([previously|T]-T,adv,previous).
+lexitem([skillfully|T]-T,adv,skillful).
+lexitem([today|T]-T,adv,today).
+lexitem([yesterday|T]-T,adv,yesterday).
+
+
+/*========================================================================
+   Pronouns
+========================================================================*/
+
+% ignoring anaphora and agreement
+lexitem([i|T]-T,pro,i).
+lexitem([you|T]-T,pro,you).
+lexitem([him|T]-T,pro,he).
+lexitem([her|T]-T,pro,she).
+lexitem([it|T]-T,pro,it).
+
+
+/*========================================================================
+   Relative Pronouns
+========================================================================*/
+
+% ignoring animacy for 'who(m)'
+lexitem([who|T]-T,relpro_subj,_).
+lexitem([who|T]-T,relpro_obj,_).
+lexitem([whom|T]-T,relpro_obj,_).
+
+lexitem([that|T]-T,relpro_subj,_).
+lexitem([that|T]-T,relpro_obj,_).
+
+
+/*========================================================================
+   Complementizer
+========================================================================*/
+
+% this is simplified wrt CCGbank analysis
+lexcat([that|Words],
+       cat(fslash(s,s),
+	   lam(X,X),
+	   to(t,t)),
+       Words).
 
 
 /*========================================================================
@@ -193,27 +289,6 @@ lexcat([no,way|Words],
        cat(fslash(s,delim(s)),
 	   lam(A,dys(not(A),[],[])),
 	   to(m(t),m(t))),
-       Words).
-
-
-/*========================================================================
-   Relative Pronouns
-========================================================================*/
-
-% subj rel
-% (e -> t) -> (e -> t) -> e -> t
-lexcat([who|Words],
-       cat(fslash(bslash(n,n),delim(bslash(s,np))),
-	   lam(Q,lam(P,lam(X,and(app(P,X),app(Q,X))))),
-	   to(to(e,t),to(to(e,t),to(e,t)))),
-       Words).
-
-% obj rel
-% (e -> t) -> (e -> t) -> e -> t
-lexcat([who|Words],
-       cat(fslash(bslash(n,n),delim(fslash(s,np))),
-	   lam(Q,lam(P,lam(X,and(app(P,X),app(Q,X))))),
-	   to(to(e,t),to(to(e,t),to(e,t)))),
        Words).
 
 
@@ -298,12 +373,16 @@ lexcat([a|Words],
 ========================================================================*/
 
 % from Barker and Shan, plus dynamic
+% TODO: determine sem type
 %lexcat([and|Words],
 %       cat(fslash(bslash(tower(s,s,X),
 %			 tower(s,s,X)),
 %		  tower(s,s,X)),
 %	   lam(R,lam(L,lam(K,seq(app(L,K),
 %				 lam(P,seq(app(R,K),
-%					   lam(Q,dys(and(P,Q),[],[]))))))))),
+%					   lam(Q,dys(and(P,Q),[],[])))))))),
+%	   _Type),
 %       Words).
+
+% TODO: coordination of like types but unlifted, with unlifted result
 

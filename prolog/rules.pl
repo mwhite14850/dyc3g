@@ -47,11 +47,21 @@ combine(cat(fslash(X,Y),F,to(m(T1),T2)),cat(Y,A,T1),
 % backward application
 combine(cat(Y,A,T1),cat(bslash(X,Y),F,to(T1,T2)),cat(X,app(F,A),T2),['<']).
 
+% backward application with eta coercion
+combine(cat(Y,A,T1),cat(bslash(X,Y),F,to(m(T1),T2)),
+	cat(X,app(F,dys(A,[],[])),T2),['EtaR','<']).
+
 % forward composition
 combine(cat(fslash(X,Y),F,to(T2,T3)),
 	cat(fslash(Y,Z),G,to(T1,T2)),
 	cat(fslash(X,Z),lam(U,app(F,app(G,U))),to(T1,T3)),
-	['B>']).
+	['>B']).
+
+% backward crossed composition
+combine(cat(fslash(Y,Z),G,to(T1,T2)),
+	cat(bslash(X,Y),F,to(T2,T3)),
+	cat(fslash(X,Z),lam(U,app(F,app(G,U))),to(T1,T3)),
+	['<Bx']).
 
 
 /*========================================================================

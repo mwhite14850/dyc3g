@@ -135,3 +135,30 @@ testcase("Vincent gives everyone a five dollar shake", 2).
 testcase("a customer orders a juicy burger", 2).
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% examples from Baldridge's dissertation
+%
+
+testcase("Brazil defeated Germany", 1).
+testcase("defeated Brazil Germany", 0).
+testcase("team that defeated Germany", 1).
+testcase("team that Brazil defeated", 1).
+testcase("I thought Brazil defeated Germany", 1).
+testcase("team that I thought Brazil defeated", 1).
+testcase("team that I thought you said Brazil defeated", 1).
+testcase("team that I thought you said that Brazil defeated", 1).
+testcase("team that I thought you said John knew Brazil defeated", 1).
+testcase("team that I thought you said John knew that Brazil defeated", 1).
+testcase("Marcos picked up a ball", 1).
+testcase("Marcos picked a ball up", 1).
+testcase("Kahn blocked a shot by Rivaldo skillfully", 1).
+% spurious ambiguity with conjunction not yet handled, so two readings here
+testcase("Kahn blocked skillfully a powerful shot by Rivaldo", 2).
+testcase("shot that Kahn blocked skillfully", 1).
+testcase("China Brazil defeated", 1).
+testcase("team that it beat previously", 1).
+testcase("Brazil defeated yesterday a team that it beat previously", 2).
+testcase("Rivaldo skillfully kicked a ball", 1).
+testcase("a referee gave him today a well-deserved red card", 2). % spurious indef
+testcase("a player that Fred gave a yellow card complains", 2). % need <T for real reading

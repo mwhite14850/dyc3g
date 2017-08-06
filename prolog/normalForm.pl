@@ -105,7 +105,7 @@ ccg_normal_form_violation(sign(_,_,D)) :-
 	last(Op1,BotOp1), last(Op2,BotOp2),
 	ccg_normal_form_violation(BotOp1,BotOp2,BotOp).
 
-ccg_normal_form_violation('T>',_,'>').
-ccg_normal_form_violation('B>',_,'>').
-ccg_normal_form_violation('B>',_,'B>').
+ccg_normal_form_violation('>T',_,'>').
+ccg_normal_form_violation('>B',_,'>').
+ccg_normal_form_violation('>B',_,'>B').
 

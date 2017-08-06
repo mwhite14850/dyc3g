@@ -35,6 +35,7 @@
    Alpha Conversion (introducing substitutions)
 ========================================================================*/
 
+% TODO: consider extending to normalize order of conjunction
 alphaConvert(F1,F2):-
    alphaConvert(F1,[],[]-_,F2).
 
