@@ -62,6 +62,7 @@ lexitem([burger,king|T]-T,pn,bk).
 lexitem([brazil|T]-T,pn,brazil).
 lexitem([china|T]-T,pn,china).
 lexitem([germany|T]-T,pn,germany).
+lexitem([spain|T]-T,pn,spain).
 lexitem([fred|T]-T,pn,fred).
 lexitem([john|T]-T,pn,john).
 lexitem([kahn|T]-T,pn,kahn).
@@ -83,6 +84,9 @@ lexitem([walk|T]-T,iv,walk).
 lexitem([wins|T]-T,iv,win).
 lexitem([win|T]-T,iv,win).
 
+lexitem([came|T]-T,iv,come).
+lexitem([left|T]-T,iv,leave).
+
 
 /*========================================================================
    Transitive Verbs
@@ -101,6 +105,7 @@ lexitem([beat|T]-T,tv,beat).
 lexitem([blocked|T]-T,tv,block).
 lexitem([defeated|T]-T,tv,defeat).
 lexitem([kicked|T]-T,tv,kick).
+lexitem([read|T]-T,tv,read).
 
 
 /*========================================================================
@@ -162,6 +167,7 @@ lexitem([prize|T]-T,n,prize).
 lexitem([prizes|T]-T,n,prize).
 
 lexitem([ball|T]-T,n,ball).
+lexitem([book|T]-T,n,book).
 lexitem([card|T]-T,n,card).
 lexitem([player|T]-T,n,player).
 lexitem([referee|T]-T,n,referee).
@@ -197,7 +203,9 @@ lexitem([yellow|T]-T,adj,yellow).
 ========================================================================*/
 
 % regular prep
+lexitem([about|T]-T,prep,about).
 lexitem([by|T]-T,prep,by).
+lexitem([from|T]-T,prep,from).
 lexitem([in|T]-T,prep,in).
 lexitem([on|T]-T,prep,on).
 
@@ -222,6 +230,7 @@ lexitem([up|T]-T,prt,up).
    Adverbs
 ========================================================================*/
 
+lexitem([angrily|T]-T,adv,angry).
 lexitem([previously|T]-T,adv,previous).
 lexitem([skillfully|T]-T,adv,skillful).
 lexitem([today|T]-T,adv,today).

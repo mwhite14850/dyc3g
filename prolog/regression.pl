@@ -160,5 +160,12 @@ testcase("China Brazil defeated", 1).
 testcase("team that it beat previously", 1).
 testcase("Brazil defeated yesterday a team that it beat previously", 2).
 testcase("Rivaldo skillfully kicked a ball", 1).
+testcase("ball that Rivaldo kicked", 1).
+testcase("a player from Spain angrily left", 1).
 testcase("a referee gave him today a well-deserved red card", 2). % spurious indef
-testcase("a player that Fred gave a yellow card complains", 2). % need <T for real reading
+% need <T for real reading here, but use with <Bx yields erroneous
+% readings without use of inert slashes
+testcase("a player that Fred gave a yellow card complains", 2).
+% related example 'player that I read a book about' requires 'about' to
+% have set args or to raise the noun over the noun modifier
+testcase("I read a book about Rivaldo yesterday", 1).

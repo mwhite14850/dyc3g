@@ -39,7 +39,25 @@ typeraise(cat(Cat1,Sem1,Type1),cat(Cat,Sem,Type),Op) :-
 	Type1=e, Type=to(to(e,t),t),
 	Op = ['>T'].
 
+% np => s\(s/np)
+%typeraise(cat(Cat1,Sem1,Type1),cat(Cat,Sem,Type),Op) :-
+%	Cat1=np, Cat=bslash(s,fslash(s,np)),
+%	Sem=lam(P,app(P,Sem1)),
+%	Type1=e, Type=to(to(e,t),t),
+%	Op = ['<T'].
+
+% nb: this works but need inert slash modality to avoid
+%     incorrect reading of 'Fred gave him a yellow card'
+%     with roles reversed using <Bx.
+% np => (s\np)\((s\np)/np)
+%typeraise(cat(Cat1,Sem1,Type1),cat(Cat,Sem,Type),Op) :-
+%	Cat1=np, Cat=bslash(bslash(s,np),fslash(bslash(s,np),np)),
+%	Sem=lam(P,app(P,Sem1)),
+%	Type1=e, Type=to(to(e,to(e,t)),to(e,t)),
+%	Op = ['<T'].
+
 % topicalization, ignoring info struct
+% np => s/(s/np)
 typeraise(cat(Cat1,Sem1,Type1),cat(Cat,Sem,Type),Op) :-
 	Cat1=np, Cat=fslash(s,fslash(s,np)),
 	Sem=lam(P,app(P,Sem1)),
