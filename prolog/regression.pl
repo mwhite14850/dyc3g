@@ -151,7 +151,7 @@ testcase("Yolanda likes Burger King and loves a juicy burger", 1).
 
 % np-coord: distributive only
 testcase("Vincent and Butch like Burger King",1).
-testcase("Every man and every woman wins",1).
+testcase("Every man and every woman walks",1).
 testcase("Jules likes every waiter and every customer",1).
 
 % Geach examples: constraints on lifting yield only 2 readings
@@ -166,6 +166,11 @@ testcase("a woman loves every waiter and every customer",2).
 
 testcase("Brazil defeated Germany", 1).
 testcase("defeated Brazil Germany", 0).
+testcase("Brazil played and defeated Germany", 1).
+testcase("Brazil played Germany and defeated", 0).
+testcase("Brazil defeated Germany and won the cup", 1).
+testcase("John bought and gave her a book",2).
+testcase("Brazil defeated Turkey and Germany",1).
 testcase("team that defeated Germany", 1).
 testcase("team that Brazil defeated", 1).
 testcase("I thought Brazil defeated Germany", 1).
@@ -174,22 +179,27 @@ testcase("team that I thought you said Brazil defeated", 1).
 testcase("team that I thought you said that Brazil defeated", 1).
 testcase("team that I thought you said John knew Brazil defeated", 1).
 testcase("team that I thought you said John knew that Brazil defeated", 1).
-testcase("Marcos picked up a ball", 1).
-testcase("Marcos picked a ball up", 1).
+testcase("Marcos picked up the ball", 1).
+testcase("Marcos picked the ball up", 1).
+% uniqueness of definites not implemented, so two readings here
+testcase("Marcos threw and Ronaldo kicked the ball", 2).
 testcase("Kahn blocked a shot by Rivaldo skillfully", 1).
 % spurious ambiguity with conjunction not yet handled, so two readings here
 testcase("Kahn blocked skillfully a powerful shot by Rivaldo", 2).
 testcase("shot that Kahn blocked skillfully", 1).
 testcase("China Brazil defeated", 1).
 testcase("team that it beat previously", 1).
-testcase("Brazil defeated yesterday a team that it beat previously", 2).
-testcase("Rivaldo skillfully kicked a ball", 1).
+testcase("Brazil defeated yesterday the team that it beat previously", 2).
+testcase("Rivaldo skillfully kicked the ball", 1).
 testcase("ball that Rivaldo kicked", 1).
 testcase("a player from Spain angrily left", 1).
-testcase("a referee gave him today a well-deserved red card", 2). % spurious indef
+testcase("the fan in the field left and in the stadium stayed", 0).
+testcase("the fan in the field left and the fan in the stadium stayed", 4). % spurious def
+testcase("the referee gave him today a well-deserved red card", 2). % spurious indef
 % need <T for real reading here, but use with <Bx yields erroneous
 % readings without use of inert slashes
-testcase("a player that Fred gave a yellow card complains", 2).
+testcase("the player that Fred gave a yellow card complains", 2).
 % related example 'player that I read a book about' requires 'about' to
 % have set args or to raise the noun over the noun modifier
 testcase("I read a book about Rivaldo yesterday", 1).
+

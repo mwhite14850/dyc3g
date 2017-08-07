@@ -66,11 +66,13 @@ lexitem([brazil|T]-T,pn,brazil).
 lexitem([china|T]-T,pn,china).
 lexitem([germany|T]-T,pn,germany).
 lexitem([spain|T]-T,pn,spain).
+lexitem([turkey|T]-T,pn,turkey).
 lexitem([fred|T]-T,pn,fred).
 lexitem([john|T]-T,pn,john).
 lexitem([kahn|T]-T,pn,kahn).
 lexitem([marcos|T]-T,pn,marcos).
 lexitem([rivaldo|T]-T,pn,rivaldo).
+lexitem([ronaldo|T]-T,pn,ronaldo).
 
 
 /*========================================================================
@@ -90,6 +92,8 @@ lexitem([win|T]-T,iv,win).
 lexitem([arrived|T]-T,iv,arrive).
 lexitem([came|T]-T,iv,come).
 lexitem([left|T]-T,iv,leave).
+lexitem([stayed|T]-T,iv,stay).
+lexitem([won|T]-T,iv,win).
 
 
 /*========================================================================
@@ -104,12 +108,18 @@ lexitem([likes|T]-T,tv,like).
 lexitem([like|T]-T,tv,like).
 lexitem([orders|T]-T,tv,order).
 lexitem([order|T]-T,tv,order).
+lexitem([wins|T]-T,tv,win).
+lexitem([win|T]-T,tv,win).
 
 lexitem([beat|T]-T,tv,beat).
 lexitem([blocked|T]-T,tv,block).
+lexitem([bought|T]-T,tv,buy).
 lexitem([defeated|T]-T,tv,defeat).
 lexitem([kicked|T]-T,tv,kick).
+lexitem([played|T]-T,tv,play).
 lexitem([read|T]-T,tv,read).
+lexitem([threw|T]-T,tv,throw).
+lexitem([won|T]-T,tv,win).
 
 
 /*========================================================================
@@ -173,9 +183,13 @@ lexitem([prizes|T]-T,n,prize).
 lexitem([ball|T]-T,n,ball).
 lexitem([book|T]-T,n,book).
 lexitem([card|T]-T,n,card).
+lexitem([cup|T]-T,n,cup).
+lexitem([fan|T]-T,n,fan).
+lexitem([field|T]-T,n,field).
 lexitem([player|T]-T,n,player).
 lexitem([referee|T]-T,n,referee).
 lexitem([shot|T]-T,n,shot).
+lexitem([stadium|T]-T,n,stadium).
 lexitem([team|T]-T,n,team).
 
 
@@ -375,6 +389,15 @@ lexcat([a|Words],
        cat(tower(tower(s,s,np),s,
 		 fslash(s,n)),
 	   lam(K,lam(K2,seq(seq_st(dys(X,[X],[]),lam(Z,app(K,lam(P,app(P,Z))))),
+			    lam(Y,app(K2,Y))))),
+	   to(to(to(to(e,t),t),m(t)),to(to(e,m(Alpha)),m(Alpha)))),
+       Words).
+
+% for now, just add definiteness annotation
+lexcat([the|Words],
+       cat(tower(tower(s,s,np),s,
+		 fslash(s,n)),
+	   lam(K,lam(K2,seq(seq_st(dys(X,[X],[def(X)]),lam(Z,app(K,lam(P,app(P,Z))))),
 			    lam(Y,app(K2,Y))))),
 	   to(to(to(to(e,t),t),m(t)),to(to(e,m(Alpha)),m(Alpha)))),
        Words).
