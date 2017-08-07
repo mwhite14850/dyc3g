@@ -24,13 +24,16 @@
 
 :- module(rules,[combine/3,combine/4]).
 
-:- use_module(monadic,[lower/2,undelimit/4,delimit/3,monadic_base_arg/1]).
+:- use_module(monadic,[lower/2,undelimit/4,delimit/3,
+		       monadic_base_arg/1,monadic_lift/2]).
 :- use_module(grammar,[typeraise/3]).
 
 
 /*========================================================================
    Base Binary Rules
-   TODO: other combinatory rules, other eta coercion cases
+
+   TODO: other combinatory rules, other eta coercion cases;
+         sensible coordination beyond one-level towers
 ========================================================================*/
 
 % forward application
@@ -41,21 +44,48 @@
 combine(cat(fslash(X,Y),F,to(T1,T2)),cat(Y,A,T1),cat(X,app(F,A),T2),['>']).
 
 % forward application with eta coercion
-combine(cat(fslash(X,Y),F,to(m(T1),T2)),cat(Y,A,T1),
-	cat(X,app(F,dys(A,[],[])),T2),['EtaR','>']).
+combine(cat(fslash(X,Y),F,to(m(T1),T2)),
+	cat(Y,A,T1),
+	cat(X,app(F,dys(A,[],[])),T2),
+	['EtaR','>']).
+
+% forward application with rightward monadic lift, for coordination
+combine(cat(fslash(X,tower(s,s,Y)),F,to(T1,T2)),
+	cat(Z,A,T),
+	cat(X,app(F,RA),T2),
+	['MLiftR','>']) :-
+
+	Z \= tower(_,_,_), % only use monadic lift where necessary
+	\+ var(A),         % needed to block infinite regress with preceding LiftR
+	monadic_lift(cat(Z,A,T),cat(tower(s,s,Y),RA,T1)).
+
 
 % backward application
 combine(cat(Y,A,T1),cat(bslash(X,Y),F,to(T1,T2)),cat(X,app(F,A),T2),['<']).
 
 % backward application with eta coercion
-combine(cat(Y,A,T1),cat(bslash(X,Y),F,to(m(T1),T2)),
-	cat(X,app(F,dys(A,[],[])),T2),['EtaR','<']).
+combine(cat(Y,A,T1),
+	cat(bslash(X,Y),F,to(m(T1),T2)),
+	cat(X,app(F,dys(A,[],[])),T2),
+	['EtaR','<']).
+
+% backward application with leftward monadic lift, for coordination
+combine(cat(Z,A,T),
+	cat(bslash(X,tower(s,s,Y)),F,to(T1,T2)),
+	cat(X,app(F,RA),T2),
+	['MLiftL','<']) :-
+
+	Z \= tower(_,_,_), % only use monadic lift where necessary
+	\+ var(A),         % needed to block infinite regress with preceding LiftL
+	monadic_lift(cat(Z,A,T),cat(tower(s,s,Y),RA,T1)).
+
 
 % forward composition
 combine(cat(fslash(X,Y),F,to(T2,T3)),
 	cat(fslash(Y,Z),G,to(T1,T2)),
 	cat(fslash(X,Z),lam(U,app(F,app(G,U))),to(T1,T3)),
 	['>B']).
+
 
 % backward crossed composition
 combine(cat(fslash(Y,Z),G,to(T1,T2)),

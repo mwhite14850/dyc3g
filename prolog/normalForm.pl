@@ -109,3 +109,6 @@ ccg_normal_form_violation('>T',_,'>').
 ccg_normal_form_violation('>B',_,'>').
 ccg_normal_form_violation('>B',_,'>B').
 
+% avoid coordinating already raised cats
+ccg_normal_form_violation('lex','>T','>').
+ccg_normal_form_violation('lex','Top','>').

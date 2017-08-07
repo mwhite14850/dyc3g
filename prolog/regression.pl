@@ -134,6 +134,30 @@ testcase("Vincent gives everyone a five dollar shake", 2).
 % readings here
 testcase("a customer orders a juicy burger", 2).
 
+% basic coordination at tower level
+testcase("a woman arrived and a man left", 1).
+
+% coordination at non-tower (pure) level, of varying constituents
+% nb: reading with distinct individuals for the indefinite implausible
+%     but arguably conceivable
+testcase("Vincent complains and Mia walks", 1).
+testcase("Yolanda likes Burger King and loves Vincent", 1).
+testcase("Butch orders and eats a juicy burger", 2).
+testcase("Vincent orders and Jules eats a juicy burger", 2).
+
+% mixed tower/non-tower coordination
+testcase("a man complains and Mia walks", 1).
+testcase("Yolanda likes Burger King and loves a juicy burger", 1).
+
+% np-coord: distributive only
+testcase("Vincent and Butch like Burger King",1).
+testcase("Every man and every woman wins",1).
+testcase("Jules likes every waiter and every customer",1).
+
+% Geach examples: constraints on lifting yield only 2 readings
+testcase("every man likes and every woman loves a juicy burger",2).
+testcase("a woman loves every waiter and every customer",2).
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

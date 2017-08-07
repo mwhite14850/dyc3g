@@ -56,7 +56,10 @@ lexcat(Words,Cat,Rest) :-
 ========================================================================*/
 
 lexitem([vincent|T]-T,pn,vincent).
+lexitem([butch|T]-T,pn,butch).
+lexitem([jules|T]-T,pn,jules).
 lexitem([mia|T]-T,pn,mia).
+lexitem([yolanda|T]-T,pn,yolanda).
 lexitem([burger,king|T]-T,pn,bk).
 
 lexitem([brazil|T]-T,pn,brazil).
@@ -84,6 +87,7 @@ lexitem([walk|T]-T,iv,walk).
 lexitem([wins|T]-T,iv,win).
 lexitem([win|T]-T,iv,win).
 
+lexitem([arrived|T]-T,iv,arrive).
 lexitem([came|T]-T,iv,come).
 lexitem([left|T]-T,iv,leave).
 
@@ -378,20 +382,22 @@ lexcat([a|Words],
 
 /*========================================================================
    Conjunction
-   TODO
 ========================================================================*/
 
 % from Barker and Shan, plus dynamic
-% TODO: determine sem type
-%lexcat([and|Words],
-%       cat(fslash(bslash(tower(s,s,X),
-%			 tower(s,s,X)),
-%		  tower(s,s,X)),
-%	   lam(R,lam(L,lam(K,seq(app(L,K),
-%				 lam(P,seq(app(R,K),
-%					   lam(Q,dys(and(P,Q),[],[])))))))),
-%	   _Type),
-%       Words).
+%
+% coordination of like tower types with X:Alpha on the bottom,
+% so sem type is T -> T -> T where T is (alpha -> Mt) -> Mt
+lexcat([and|Words],
+       cat(fslash(bslash(tower(s,s,X),
+			 tower(s,s,X)),
+		  tower(s,s,X)),
+	   lam(R,lam(L,lam(K,seq(app(L,K),
+				 lam(P,seq(app(R,K),
+					   lam(Q,dys(and(P,Q),[],[])))))))),
+	   to(to(to(Alpha,m(t)),m(t)),
+	      to(to(to(Alpha,m(t)),m(t)),
+		 to(to(Alpha,m(t)),m(t))))),
+       Words).
 
-% TODO: coordination of like types but unlifted, with unlifted result
 
