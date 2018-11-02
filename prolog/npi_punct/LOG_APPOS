@@ -1,0 +1,253 @@
+
+$ swipl
+Welcome to SWI-Prolog (threaded, 64 bits, version 7.4.1)
+SWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software.
+Please run ?- license. for legal details.
+
+For online help and background, visit http://www.swi-prolog.org
+For built-in help, use ?- help(Topic). or ?- apropos(Word).
+
+?- [dyc3g].
+
+> ------------------------------------------------------------------- <
+> betaConversion.pl, by Patrick Blackburn and Johan Bos               <
+>                                                                     <
+> ?- betaConvert(F,C).         - beta-convert a formula               <
+> ?- betaConvertTestSuite.     - run the test suite                   <
+> ?- infix.                    - switches to infix display mode       <
+> ?- prefix.                   - switches to prefix display mode      <
+> ?- info.                     - shows this information               <
+> ------------------------------------------------------------------- <
+
+
+> ------------------------------------------------------------------- <
+> dyc3g.pl, by Michael White                                          <
+>                                                                     <
+> ?- regression.               - run regression test suite            <
+> ?- continuized.              - parse a sentence using continuations <
+> ?- derivs.                   - switches derivations on              <
+> ?- noderivs.                 - switches derivations off             <
+> ?- info.                     - shows this information               <
+> ------------------------------------------------------------------- <
+
+true.
+
+?- derivs.
+true.
+
+?- infix.
+true.
+
+?- continuized.
+
+Kim loves Sandy , CEO of XYZ , madly .
+> 
+Derivation 1
+
+kim loves sandy , ceo of xyz , madly . :- 
+  s(+,bal,dot)
+  { <madly(love(kim,sandy)), _> | ceo(sandy,xyz) }
+  Mt
+  (Lower)
+ kim loves sandy , ceo of xyz , madly . :- 
+   s(+,bal,_266) _|_ s(+,bal,dot) __||__ s(+,bal,dot)
+   (lam A seq(dys(sandy,[],[ceo(sandy,xyz)]),lam(B,app(A,madly(love(kim,B))))))
+   (t -> Mt) -> Mt
+   (<)
+  kim loves sandy , ceo of xyz , madly :- 
+    s(+,bal,_450) _|_ s(+,_456,nil) __||__ s(_462,_464,_466)
+    (lam A seq(dys(sandy,[],[ceo(sandy,xyz)]),lam(B,app(A,madly(love(kim,B))))))
+    (t -> Mt) -> Mt
+    (LiftR_<)
+   kim loves sandy , ceo of xyz , :- 
+     s(+,bal,_450) _|_ s(+,bal,comma) __||__ s(_636,_638,_640)
+     (lam A seq(dys(sandy,[],[ceo(sandy,xyz)]),lam(B,app(A,love(kim,B)))))
+     (t -> Mt) -> Mt
+     (LiftL_<)
+    kim :- 
+      np
+      kim
+      e
+      (lex)
+    loves sandy , ceo of xyz , :- 
+      s(+,bal,_450) _|_ s(+,bal,comma) __||__ (s(_636,_638,_640)\np)
+      (lam A seq(dys(sandy,[],[ceo(sandy,xyz)]),lam(B,app(A,lam(C,love(C,B))))))
+      ((e -> t) -> Mt) -> Mt
+      (LiftL_>)
+     loves :- 
+       (s(_636,_638,_640)\np)/np
+       (lam A (lam B love(B,A)))
+       e -> e -> t
+       (lex)
+     sandy , ceo of xyz , :- 
+       s(+,bal,_450) _|_ s(+,bal,comma) __||__ np
+       (lam A seq(dys(sandy,[],[ceo(sandy,xyz)]),lam(B,app(A,B))))
+       (e -> Mt) -> Mt
+       (MLiftL_<)
+      sandy :- 
+        np
+        sandy
+        e
+        (lex)
+      , ceo of xyz , :- 
+        (s(+,bal,_450) _|_ s(+,bal,comma) __||__ np)\(s(+,bal,_1110) _|_ s(+,bal,nil) __||__ np)
+        (lam A (lam B (A @ (lam C seq(dys(C,[],[ceo(C,xyz)]),lam(D,app(B,D)))))))
+        ((e -> Mt) -> Mt) -> (e -> Mt) -> Mt
+        (>)
+       , ceo of xyz :- 
+         ((s(+,bal,_450) _|_ s(+,bal,comma) __||__ np)\(s(+,bal,_1110) _|_ s(+,bal,nil) __||__ np))/comma
+         (lam A (lam B (lam C (B @ (lam D seq(dys(D,[],[ceo(D,xyz)]),lam(E,app(C,E))))))))
+         unit -> ((e -> Mt) -> Mt) -> (e -> Mt) -> Mt
+         (MLiftR_>)
+        , :- 
+          (((s(+,bal,_450) _|_ s(+,bal,comma) __||__ np)\(s(+,bal,_1110) _|_ s(+,bal,nil) __||__ np))/comma)/(s(+,bal,_1394) _|_ s(+,bal,nil) __||__ np_pred)
+          (lam A (lam B (lam C (lam D (C @ (lam E (A @ (lam F seq(dys(E,[],[app(F,E)]),lam(G,app(D,G)))))))))))
+          (((e -> t) -> Mt) -> Mt) -> unit -> ((e -> Mt) -> Mt) -> (e -> Mt) -> Mt
+          (lex)
+        ceo of xyz :- 
+          np_pred
+          (lam A ceo(A,xyz))
+          e -> t
+          (N_to_NP_pred)
+         ceo of xyz :- 
+           n
+           (lam A ceo(A,xyz))
+           e -> t
+           (>)
+          ceo :- 
+            n/pp_of
+            (lam A (lam B ceo(B,A)))
+            e -> e -> t
+            (lex)
+          of xyz :- 
+            pp_of
+            xyz
+            e
+            (>)
+           of :- 
+             pp_of/np
+             (lam A A)
+             e -> e
+             (lex)
+           xyz :- 
+             np
+             xyz
+             e
+             (lex)
+       , :- 
+         comma
+         unit
+         unit
+         (lex)
+   madly :- 
+     s(_462,_464,_466)\s(_636,_638,_640)
+     (lam A madly(A))
+     t -> t
+     (lex)
+  . :- 
+    (s(+,bal,_266) _|_ s(+,bal,dot) __||__ s(+,bal,dot))\(s(+,bal,_450) _|_ s(+,_456,nil) __||__ s(_462,_464,_466))
+    (lam A A)
+    ((t -> Mt) -> Mt) -> (t -> Mt) -> Mt
+    (lex)
+
+
+Reading 1
+
+{ <madly(love(kim,sandy)), _> | ceo(sandy,xyz) }
+(madly(love(kim,sandy)) & ceo(sandy,xyz))
+
+
+true.
+
+?- continuized.
+
+everyone , CEO of XYZ , walks
+> 
+Derivation 1
+
+everyone , ceo of xyz , walks :- 
+  s(_148,_150,_152)
+  { <(all A { <person(A), _> } { <walk(A), _> | ceo(A,xyz) }), _> }
+  Mt
+  (Lower)
+ everyone , ceo of xyz , walks :- 
+   s(_148,bal,_252) _|_ s(+,_150,_152) __||__ s(+,_150,_152)
+   (lam A { <(all B { <person(B), _> } seq(dys(B,[],[ceo(B,xyz)]),lam(C,app(A,walk(C))))), _> })
+   (t -> Mt) -> Mt
+   (LiftR_<)
+  everyone , ceo of xyz , :- 
+    s(_148,bal,_252) _|_ s(+,bal,comma) __||__ np
+    (lam A { <(all B { <person(B), _> } seq(dys(B,[],[ceo(B,xyz)]),lam(C,app(A,C)))), _> })
+    (e -> Mt) -> Mt
+    (<)
+   everyone :- 
+     s(_148,bal,_574) _|_ s(+,bal,nil) __||__ np
+     (lam A { <(all B { <person(B), _> } (A @ B)), _> })
+     (e -> Mt) -> Mt
+     (lex)
+   , ceo of xyz , :- 
+     (s(_148,bal,_252) _|_ s(+,bal,comma) __||__ np)\(s(_148,bal,_574) _|_ s(+,bal,nil) __||__ np)
+     (lam A (lam B (A @ (lam C seq(dys(C,[],[ceo(C,xyz)]),lam(D,app(B,D)))))))
+     ((e -> Mt) -> Mt) -> (e -> Mt) -> Mt
+     (>)
+    , ceo of xyz :- 
+      ((s(_148,bal,_252) _|_ s(+,bal,comma) __||__ np)\(s(_148,bal,_574) _|_ s(+,bal,nil) __||__ np))/comma
+      (lam A (lam B (lam C (B @ (lam D seq(dys(D,[],[ceo(D,xyz)]),lam(E,app(C,E))))))))
+      unit -> ((e -> Mt) -> Mt) -> (e -> Mt) -> Mt
+      (MLiftR_>)
+     , :- 
+       (((s(_148,bal,_252) _|_ s(+,bal,comma) __||__ np)\(s(_148,bal,_574) _|_ s(+,bal,nil) __||__ np))/comma)/(s(+,bal,_982) _|_ s(+,bal,nil) __||__ np_pred)
+       (lam A (lam B (lam C (lam D (C @ (lam E (A @ (lam F seq(dys(E,[],[app(F,E)]),lam(G,app(D,G)))))))))))
+       (((e -> t) -> Mt) -> Mt) -> unit -> ((e -> Mt) -> Mt) -> (e -> Mt) -> Mt
+       (lex)
+     ceo of xyz :- 
+       np_pred
+       (lam A ceo(A,xyz))
+       e -> t
+       (N_to_NP_pred)
+      ceo of xyz :- 
+        n
+        (lam A ceo(A,xyz))
+        e -> t
+        (>)
+       ceo :- 
+         n/pp_of
+         (lam A (lam B ceo(B,A)))
+         e -> e -> t
+         (lex)
+       of xyz :- 
+         pp_of
+         xyz
+         e
+         (>)
+        of :- 
+          pp_of/np
+          (lam A A)
+          e -> e
+          (lex)
+        xyz :- 
+          np
+          xyz
+          e
+          (lex)
+    , :- 
+      comma
+      unit
+      unit
+      (lex)
+  walks :- 
+    s(+,_150,_152)\np
+    (lam A walk(A))
+    e -> t
+    (lex)
+
+
+Reading 1
+
+{ <(all A { <person(A), _> } { <walk(A), _> | ceo(A,xyz) }), _> }
+(all A (person(A) -> (walk(A) & ceo(A,xyz))))
+
+
+true.
+
+?- 
